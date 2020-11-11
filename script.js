@@ -1,46 +1,88 @@
-
-
-let form_element = document.getElementById("form");
-form_element.addEventListener("submit", (event)=> {
-handle_submit(event);
-})
-
-const handle_submit = (event) => {
-    event.preventDefault();
-    submit();
-
+const post_page = () => {
+    let form_element = document.getElementById("form");
+    form_element.addEventListener("submit", (event)=> {
+    handle_submit(event);
+    })
+    
+    const handle_submit = (event) => {
+        event.preventDefault();
+        submit();
+    
+    }
+    
+    
+    const submit = async () => {
+        let product = { 
+            name: document.querySelector("#name").value,
+            description: document.querySelector("#description").value,
+            brand: document.querySelector("#brand").value,
+            imageUrl: document.querySelector("#image").value,
+            price: document.querySelector("#price").value,
+        }
+    
+        
+        try {
+            let response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
+            method: "POST",
+            body: JSON.stringify(product),
+            headers: new Headers({"Content-Type" : "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
+            ,
+        })
+    })
+        if (response.ok) {
+            alert("Product entered successfully");
+            location.assign("index.html");
+        } else {
+            const error = await response.json();
+            console.log(error);
+        }
+    }
+        catch(error){
+        console.log(error)
+        }
+    }
 }
 
 
-const submit = async () => {
-    let product = { 
-        name: document.querySelector("#name").value,
-        description: document.querySelector("#description").value,
-        brand: document.querySelector("#brand").value,
-        imageUrl: document.querySelector("#image").value,
-        price: document.querySelector("#price").value,
-    }
 
-    
+const request_page = async () => {
+    let current_products = document.querySelector("#current-products");
+
     try {
-        let response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
-        method: "POST",
-        body: JSON.stringify(product),
-        headers: new Headers({"Content-Type" : "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
-        ,
-    })
-})
-    if (response.ok) {
-        alert("Product entered successfully");
-        location.assign("index.html");
-    } else {
-        const error = await response.json();
+        let response = await fetch("https://striveschool.herokuapp.com/api/product", {
+            method: "GET",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
+        });
+        let events = await response.json();
+        if (events.length > 0) {
+            events.forEach(event => {
+                let li = document.createElement("li");
+                li.classList.add(
+                    "list-group-item",
+                    "d-flex",
+                    "justify-content-between"
+                );
+                li.innerHTML = `<span><img src="${element.imageUrl}</span><span>${element.name}</span>
+                <span>${element.description}</span><span>${element.brand}</span><span>${element.price}</span>`
+                current_products.appendChild(li);
+            })
+        } else {
+            current_products.innerHTML = "<h1>STORE EMPTY/h1>";
+        }
+
+        console.log(events);
+    } catch (error) {
         console.log(error);
     }
 }
-    catch(error){
-    console.log(error)
+
+window.onload = () => {
+    if (window.location.href.indexOf("index.html") != -1) {
+        request_page();
     }
 
+    if (window.location.href.indexOf("backoffice2.html" != -1)) {
+        post_page();
+    }
 }

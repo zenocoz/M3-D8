@@ -72,38 +72,37 @@
         integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous">
     </script>
 
-    <script>
-        window.onload = async () => {
-            const url = "https://striveschool.herokuapp.com/api/product";
-            let current_products = document.querySelector("#current-products");
+    <script src="script.js">
+        // window.onload = async () => {
+        //     let current_products = document.querySelector("#current-products");
 
-            try {
-                let response = await fetch(url, {
-                    method: "GET",
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
-                });
-                let events = await response.json();
-                if (events.length > 0) {
-                    events.forEach(event => {
-                        let li = document.createElement("li");
-                        li.classList.add(
-                            "list-group-item",
-                            "d-flex",
-                            "justify-content-between"
-                        );
-                        li.innerHTML = `<span><img src="${element.imageUrl}</span><span>${element.name}</span>
-                        <span>${element.description}</span><span>${element.brand}</span><span>${element.price}</span>`
-                        current_products.appendChild(li);
-                    })
-                } else {
-                    current_products.innerHTML = "<h1>STORE EMPTY/h1>";
-                }
+        //     try {
+        //         let response = await fetch("https://striveschool.herokuapp.com/api/product", {
+        //             method: "GET",
+        //             "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
+        //         });
+        //         let events = await response.json();
+        //         if (events.length > 0) {
+        //             events.forEach(event => {
+        //                 let li = document.createElement("li");
+        //                 li.classList.add(
+        //                     "list-group-item",
+        //                     "d-flex",
+        //                     "justify-content-between"
+        //                 );
+        //                 li.innerHTML = `<span><img src="${element.imageUrl}</span><span>${element.name}</span>
+        //                 <span>${element.description}</span><span>${element.brand}</span><span>${element.price}</span>`
+        //                 current_products.appendChild(li);
+        //             })
+        //         } else {
+        //             current_products.innerHTML = "<h1>STORE EMPTY/h1>";
+        //         }
 
-                console.log(events);
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        //         console.log(events);
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
     </script>
 </body>
 
