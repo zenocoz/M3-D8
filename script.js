@@ -20,13 +20,12 @@ const post_page = () => {
             price: document.querySelector("#price").value,
         }
     
-        
         try {
             let response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
             method: "POST",
             body: JSON.stringify(product),
             headers: new Headers({"Content-Type" : "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZGZkMjRiY2RlMTAwMTc2MTZhYTUiLCJpYXQiOjE2MDUxNjgzNzksImV4cCI6MTYwNjM3Nzk3OX0.tl61sgw4EimhtGv9JPssrbLiJ_umWM0BnvSKouAefYc"
             ,
         })
     })
@@ -44,15 +43,32 @@ const post_page = () => {
     }
 }
 
+// const new_token = async () => {
+
+//     try {
+//         let new_post = await fetch("https://striveschool-api.herokuapp.com/api/account/login", {
+//             method: "POST",
+//             headers: new Headers({
+//                 username: "federico.soncini@gmail.com",
+//                 passord: "striveorama"
+//             })
+//         });
+//     }
+        
+//     catch(error) {
+//         console.log(error);
+//     }
+
+// }
 
 
 const request_page = async () => {
     let current_products = document.querySelector("#current-products");
 
     try {
-        let response = await fetch("https://striveschool.herokuapp.com/api/product", {
+        let response = await fetch("https://striveschool-api.herokuapp.com/api/product", {
             method: "GET",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZGZkMjRiY2RlMTAwMTc2MTZhYTUiLCJpYXQiOjE2MDUxNjgzNzksImV4cCI6MTYwNjM3Nzk3OX0.tl61sgw4EimhtGv9JPssrbLiJ_umWM0BnvSKouAefYc"
         });
         let events = await response.json();
         if (events.length > 0) {
@@ -78,11 +94,5 @@ const request_page = async () => {
 }
 
 window.onload = () => {
-    if (window.location.href.indexOf("index.html") != -1) {
-        request_page();
-    }
-
-    if (window.location.href.indexOf("backoffice2.html" != -1)) {
-        post_page();
-    }
+  request_page();
 }

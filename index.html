@@ -39,8 +39,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/backoffice2.html">Backoffice</a>
                             </li>
-
-
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -53,10 +51,13 @@
         <div class="container text-center">
             <h1>NEW AMAZON</h1>
             <h2 class="my-5">Products</h2>
-            <div class="col-md-6 offset-md-3">
+            <div class="row content">
+                <!-- <div class="col-md-6 offset-md-3">
 
-                <ul class="list-group list-group-flush" id="current-products"></ul>
+                    <ul class="list-group list-group-flush" id="current-products"></ul>
+                </div> -->
             </div>
+
         </div>
     </div>
 
@@ -72,37 +73,55 @@
         integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous">
     </script>
 
-    <script src="script.js">
-        // window.onload = async () => {
-        //     let current_products = document.querySelector("#current-products");
+    <script>
+        window.onload = async () => {
+            let current_products = document.querySelector("#current-products");
 
-        //     try {
-        //         let response = await fetch("https://striveschool.herokuapp.com/api/product", {
-        //             method: "GET",
-        //             "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
-        //         });
-        //         let events = await response.json();
-        //         if (events.length > 0) {
-        //             events.forEach(event => {
-        //                 let li = document.createElement("li");
-        //                 li.classList.add(
-        //                     "list-group-item",
-        //                     "d-flex",
-        //                     "justify-content-between"
-        //                 );
-        //                 li.innerHTML = `<span><img src="${element.imageUrl}</span><span>${element.name}</span>
-        //                 <span>${element.description}</span><span>${element.brand}</span><span>${element.price}</span>`
-        //                 current_products.appendChild(li);
-        //             })
-        //         } else {
-        //             current_products.innerHTML = "<h1>STORE EMPTY/h1>";
-        //         }
 
-        //         console.log(events);
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
+            try {
+                let response = await fetch("https://striveschool-api.herokuapp.com/api/product", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE"
+                    }
+                });
+                let events = await response.json();
+                if (events.length > 0) {
+                    let content = document.querySelector(".content");
+                    events.forEach(event => {
+                        let col = `<div class="col col-6"> 
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="${event.imageUrl}" alt="Card image cap">
+                                <div class="card-body">
+                                <h5 class="card-title">${event.name}</h5>
+                                <p class="card-text">${event.description}</p>
+                                <h6>Price $ ${event.price} </h6>
+                            <a href="#" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>`;
+                        content.innerHTML += col;
+
+                        //     let li = document.createElement("li");
+                        //     li.classList.add(
+                        //         "list-group-item",
+                        //         "d-flex",
+                        //         "justify-content-between"
+                        //     );
+                        //     li.innerHTML = `<span><img src="${event.imageUrl}</img></span><span>${event.name}</span>
+                        //     <span>${event.description}</span><span>${event.brand}</span><span>${event.price}</span>`
+                        //     current_products.appendChild(li);
+                        // })
+                    })
+                } else {
+                    content.innerHTML = "<h1>STORE EMPTY/h1>";
+                }
+
+                console.log(events);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     </script>
 </body>
 
