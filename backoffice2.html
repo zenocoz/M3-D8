@@ -111,6 +111,23 @@
     </script>
 
     <script>
+        window.onload = async () => {
+            let urlParams = new URLSearchParams(window.location.search);
+            id = urlParams.get("id");
+            console.log(id);
+            if (id) {
+                let response = await fetch("https://striveschool-api.herokuapp.com/api/product/" +
+                    id);
+                let event = await response
+                    .json(); // transforming the response body in an usable object, asyncronous operation!
+                document.getElementById("name").value = event.name;
+                document.getElementById("description").value = event.description;
+                document.getElementById("time").value = event.time.split(".")[0];
+                document.getElementById("price").value = event.price;
+            }
+        }
+
+
         let form_element = document.getElementById("form");
         form_element.addEventListener("submit", (event) => {
             handle_submit(event);
@@ -120,7 +137,6 @@
             event.preventDefault();
             submit();
         }
-
 
 
         const submit = async () => {
