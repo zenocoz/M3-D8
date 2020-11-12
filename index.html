@@ -74,7 +74,7 @@
     </script>
 
     <script>
-        window.onload = async () => {
+        const fetchProducts = async () => {
             let current_products = document.querySelector("#current-products");
 
 
@@ -86,7 +86,10 @@
                     }
                 });
                 let events = await response.json();
+
                 if (events.length > 0) {
+
+
                     let content = document.querySelector(".content");
                     events.forEach(event => {
                         let col = `<div class="col col-6"> 
@@ -96,7 +99,7 @@
                                 <h5 class="card-title">${event.name}</h5>
                                 <p class="card-text">${event.description}</p>
                                 <h6>Price $ ${event.price} </h6>
-                            <a href="#" class="btn btn-primary">View</a>
+                            <a href="#" class="btn btn-primary"></a>
                                 </div>
                             </div>
                         </div>`;
