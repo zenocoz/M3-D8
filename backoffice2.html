@@ -36,9 +36,9 @@
                             <li class="nav-item active">
                                 <a class="nav-link" href="/index.html">Home </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link" href="backoffice2.html">Backoffice<span
-                                        class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/product_management.html">Product Management</a>
                             </li>
 
 
@@ -111,21 +111,21 @@
     </script>
 
     <script>
-        window.onload = async () => {
-            let urlParams = new URLSearchParams(window.location.search);
-            id = urlParams.get("id");
-            console.log(id);
-            if (id) {
-                let response = await fetch("https://striveschool-api.herokuapp.com/api/product/" +
-                    id);
-                let event = await response
-                    .json(); // transforming the response body in an usable object, asyncronous operation!
-                document.getElementById("name").value = event.name;
-                document.getElementById("description").value = event.description;
-                document.getElementById("time").value = event.time.split(".")[0];
-                document.getElementById("price").value = event.price;
-            }
-        }
+        // window.onload = async () => {
+        //     let urlParams = new URLSearchParams(window.location.search);
+        //     id = urlParams.get("id");
+        //     console.log(id);
+        //     if (id) {
+        //         let response = await fetch("https://striveschool-api.herokuapp.com/api/product/" +
+        //             id);
+        //         let event = await response
+        //             .json(); // transforming the response body in an usable object, asyncronous operation!
+        //         document.getElementById("name").value = event.name;
+        //         document.getElementById("description").value = event.description;
+        //         document.getElementById("time").value = event.time.split(".")[0];
+        //         document.getElementById("price").value = event.price;
+        //     }
+        // }
 
 
         let form_element = document.getElementById("form");
@@ -137,7 +137,6 @@
             event.preventDefault();
             submit();
         }
-
 
         const submit = async () => {
             let product = {
@@ -154,12 +153,12 @@
                     body: JSON.stringify(product),
                     headers: new Headers({
                         "Content-Type": "application/json",
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZGZkMjRiY2RlMTAwMTc2MTZhYTUiLCJpYXQiOjE2MDUxNjgzNzksImV4cCI6MTYwNjM3Nzk3OX0.tl61sgw4EimhtGv9JPssrbLiJ_umWM0BnvSKouAefYc",
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE",
                     })
                 })
                 if (response.ok) {
                     alert("Product entered successfully");
-                    location.assign("index.html");
+                    location.assign("product_management.html");
                 } else {
                     const error = await response.json();
                     console.log(error);

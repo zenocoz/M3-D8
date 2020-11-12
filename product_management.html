@@ -75,9 +75,8 @@
 
     </script>
     <script>
-        let renderListedProducts = async () => {
+        const renderListedProducts = async () => {
             try {
-
                 let products = await fetchProducts();
                 let listed = document.querySelector("#listed-products");
                 console.log(listed);
@@ -119,16 +118,16 @@
             });
             if (deletion.ok) {
                 alert("Event deleted successfully");
-                renderListedProducts();
+                location.reload();
 
             }
 
         }
 
-        const updateProduct = async () => {
-
-        }
         renderListedProducts();
+        // const updateProduct = async () => {
+
+        // }
     </script>
 
 </body>
