@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    <title>Backoffice</title>
+    <title>Update</title>
     <style>
         .container {
             background-color: rgb(156, 139, 139);
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="#">The New Amazon*</a>
+                    <a class="navbar-brand" href="#">Il Libro</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,9 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
                                 <a class="nav-link" href="/index.html">Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/backoffice2.html">Backoffice</a>
                             </li>
 
                             <li class="nav-item">
@@ -52,9 +55,9 @@
             </div>
         </div>
         <div class="row">
-            <h1 class="text-center">New Amazon</h1>
-            <h1 class="text-center">(backoffice)</h1>
-            <h2 class="text-center mt-5">Enter a new product</h2>
+            <div class="col-6 offset-3">
+                <h1 class="text-center">Update Product</h1>
+            </div>
 
             <div class="col-6 offset-3">
                 <form id="form">
@@ -88,7 +91,7 @@
 
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit" value="Submit product">
-                            Submit product
+                            Update product
                         </button>
                     </div>
                 </form>
@@ -114,67 +117,71 @@
     </script>
 
     <script>
-        window.onload = async () => {
-            let urlParams = new URLSearchParams(window.location.search);
-            let id = urlParams.get("id");
+        let url = "https://striveschool-api.herokuapp.com/api/product/";
 
-            if (id) {
-                // let response = await fetch("https://striveschool-api.herokuapp.com/api/product/" +
-                //     id);
-                // let event = await response
-                //     .json(); // transforming the response body in an usable object, asyncronous operation!
+        let id;
+        const getProductDetails = async () => {
 
-                let single_product = await fetchSingleProduct(id);
-                console.log(single_product);
-                document.getElementById("name").value = single_product.name;
-                document.getElementById("description").value = single_product.description;
-                document.getElementById("brand").value = single_product.brand;
-                document.getElementById("image").value = single_product.imageUrl;
-                document.getElementById("price").value = single_product.price;
-            }
+            let url_params = new URLSearchParams(window.location.search);
+            id = url_params.get("id");
+            let product = await fetchSingleProduct(id);
+
+            document.getElementById("name").value = product.name;
+            console.log(product.name);
+            document.getElementById("description").value = product.description;
+            document.getElementById("brand").value = product.brand;
+            document.getElementById("image").value = product.imageUrl;
+            document.getElementById("price").value = product.price;
+            console.log(product);
+            let update_btn = document.querySelector(".btn-primary");
+            update_btn.onclick = () => {
+                handleUpdate(e)
+            };
+
+        }
+
+        const handleUpdate = (e) => {
+            e.preventDefault();
+            console.log("LOG");
+            // updateProductDetails();
         }
 
 
-        let form_element = document.getElementById("form");
-        form_element.addEventListener("submit", (event) => {
-            handle_submit(event);
-        })
-
-        const handle_submit = (event) => {
-            event.preventDefault();
-            submit();
-        }
-
-        const submit = async () => {
-            let product = {
+        const updateProductDetails = async () => {
+            let updatedProduct = {
                 name: document.querySelector("#name").value,
                 description: document.querySelector("#description").value,
                 brand: document.querySelector("#brand").value,
                 imageUrl: document.querySelector("#image").value,
                 price: document.querySelector("#price").value,
-            }
+            };
 
             try {
-                let response = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
-                    method: "POST",
-                    body: JSON.stringify(product),
+                console.log(id);
+                let response = await fetch(url + id, {
+                    method: "PUT",
+                    body: JSON.stringify(updatedProduct),
                     headers: new Headers({
                         "Content-Type": "application/json",
                         "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmFiZjA2YjRiY2RlMTAwMTc2MTZiYWEiLCJpYXQiOjE2MDUxMDM3MjMsImV4cCI6MTYwNjMxMzMyM30.UbKj_OMFcs4waSUNmvcnsQaJjquuaUrJLDBzVVcL-dE",
                     })
                 })
                 if (response.ok) {
-                    alert("Product entered successfully");
-                    location.assign("product_management.html");
-                } else {
-                    const error = await response.json();
-                    console.log(error);
+                    alert("Product updated successfully");
+                    //location.assign("index.html");
                 }
+
             } catch (error) {
-                console.log(error)
+
+                console.log(error);
             }
+
         }
+
+
+        getProductDetails();
     </script>
+
 </body>
 
 </html>
